@@ -24,7 +24,7 @@ def plot_experiment(result: ExperimentResult, output_path: Path) -> None:
         result: Results of the experiment to plot.
         output_path: Path of the PNG file to create.
     """
-    fig, ax = plt.subplots(figsize=(8, 4.8))
+    fig, ax = plt.subplots(figsize=(9, 4.8))
 
     for color, series_result in zip(SERIES_COLORS, result.series_results):
         ax.plot(
@@ -52,7 +52,12 @@ def plot_experiment(result: ExperimentResult, output_path: Path) -> None:
     )
     ax.set_xlabel("Iteration", color=MUTED_COLOR)
     ax.set_ylabel("Best fitness (mean of runs)", color=MUTED_COLOR)
-    ax.legend(frameon=False, labelcolor=TEXT_COLOR, loc="best")
+    ax.legend(
+        frameon=False,
+        labelcolor=TEXT_COLOR,
+        loc="center left",
+        bbox_to_anchor=(1.01, 0.5),
+    )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     fig.tight_layout()

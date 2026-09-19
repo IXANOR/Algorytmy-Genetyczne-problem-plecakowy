@@ -7,6 +7,7 @@ import numpy as np
 
 from knapsack_ga.experiments import ExperimentResult
 
+OPTIMUM_TOLERANCE = 1e-6
 SUMMARY_COLUMNS = (
     "dataset",
     "n_items",
@@ -114,5 +115,10 @@ def _percent(value: float, optimum: float | None) -> float | None:
 
 
 def _count_optimal(best_fitnesses: np.ndarray, optimum: float | None) -> int | None:
-    """Returns how many runs reached the optimum, if it is known."""
-    return int((best_fitnesses >= optimum - 1e-6).sum()) if optimum else None
+    """Returns how many runs reached the optimum, if it is known.
+
+    A relative tolerance is used, because some optima are stored rounded.
+    """
+    if not optimum:
+        return None
+    return int((best_fitnesses >= optimum * (1 - OPTIMUM_TOLERANCE)).sum())
