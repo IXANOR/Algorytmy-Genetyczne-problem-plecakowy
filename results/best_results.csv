@@ -1,0 +1,23 @@
+dataset,n_items,optimum,best,best_to_optimum_pct,experiment,series
+f3_l-d_kp_4_20,4,35.0,35.0,100.0,mutation_rate,p_m = 0.001
+f4_l-d_kp_4_11,4,23.0,23.0,100.0,mutation_rate,p_m = 0.001
+f9_l-d_kp_5_80,5,130.0,130.0,100.0,mutation_rate,p_m = 0.001
+f7_l-d_kp_7_50,7,107.0,107.0,100.0,mutation_rate,p_m = 0.005
+f1_l-d_kp_10_269,10,295.0,295.0,100.0,mutation_rate,p_m = 0.005
+f6_l-d_kp_10_60,10,52.0,52.0,100.0,mutation_rate,p_m = 0.005
+f5_l-d_kp_15_375,15,481.0694,481.06936799999994,100.0,mutation_rate,p_m = 0.001
+f10_l-d_kp_20_879,20,1025.0,1025.0,100.0,mutation_rate,p_m = 0.005
+f2_l-d_kp_20_878,20,1024.0,1024.0,100.0,crossover_rate,p_c = 0.9
+f8_l-d_kp_23_10000,23,9767.0,9767.0,100.0,selection,rank
+knapPI_1_100_1000_1,100,9147.0,9147.0,100.0,mutation_rate,p_m = 0.005
+knapPI_2_100_1000_1,100,1514.0,1514.0,100.0,crossover_rate,p_c = 0.9
+knapPI_1_200_1000_1,200,11238.0,11238.0,100.0,crossover_rate,p_c = 1
+knapPI_2_200_1000_1,200,1634.0,1634.0,100.0,crossover_rate,p_c = 0.9
+knapPI_1_500_1000_1,500,28857.0,28505.0,98.78,mutation_rate,p_m = 0.001
+knapPI_2_500_1000_1,500,4566.0,4450.0,97.46,mutation_rate,p_m = 0.001
+knapPI_1_1000_1000_1,1000,54503.0,48436.0,88.87,mutation_rate,p_m = 0.001
+knapPI_2_1000_1000_1,1000,9052.0,7935.0,87.66,mutation_rate,p_m = 0.0005
+knapPI_1_2000_1000_1,2000,110625.0,83575.0,75.55,selection,tournament
+knapPI_2_2000_1000_1,2000,18051.0,14845.0,82.24,selection,tournament
+knapPI_1_5000_1000_1,5000,276457.0,169298.0,61.24,selection,tournament
+knapPI_1_10000_1000_1,10000,563647.0,287123.0,50.94,selection,tournament
