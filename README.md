@@ -1,0 +1,1 @@
+# Algorytmy-Genetyczne-problem-plecakowy
