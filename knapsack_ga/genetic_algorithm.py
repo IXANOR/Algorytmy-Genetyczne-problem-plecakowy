@@ -28,6 +28,8 @@ class GeneticAlgorithmConfig:
         generations: Number of iterations of the algorithm.
         crossover_rate: Probability of crossing over a pair of parents.
         mutation_rate: Probability of mutating a single gene.
+        elitism: Number of the best chromosomes copied unchanged to the next
+            population.
         fitness: Function evaluating the population.
         selection: Function selecting parents from the population.
         crossover: Function crossing over two parents.
@@ -38,6 +40,7 @@ class GeneticAlgorithmConfig:
     generations: int = 200
     crossover_rate: float = 0.8
     mutation_rate: float = 0.01
+    elitism: int = 0
     fitness: FitnessFunction = knapsack_fitness
     selection: SelectionFunction = roulette_selection
     crossover: CrossoverFunction = one_point_crossover
@@ -126,6 +129,9 @@ class GeneticAlgorithm:
     def _next_generation(self, population: np.ndarray, fitness: np.ndarray) -> np.ndarray:
         """Creates a new population with selection, crossover and mutation.
 
+        The ``elitism`` best chromosomes of the current population replace the
+        first children, so the best solution is never lost.
+
         Args:
             population: Current population.
             fitness: Fitness of every chromosome in the current population.
@@ -135,7 +141,11 @@ class GeneticAlgorithm:
         """
         parents = population[self.config.selection(fitness, self.rng)]
         children = self._crossover_population(parents)
-        return self.config.mutation(children, self.config.mutation_rate, self.rng)
+        children = self.config.mutation(children, self.config.mutation_rate, self.rng)
+        if self.config.elitism:
+            elite = np.argsort(fitness)[-self.config.elitism :]
+            children[: self.config.elitism] = population[elite]
+        return children
 
     def _crossover_population(self, parents: np.ndarray) -> np.ndarray:
         """Crosses over consecutive pairs of parents.

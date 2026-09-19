@@ -118,6 +118,14 @@ class GeneticAlgorithmTest(unittest.TestCase):
         self.assertEqual(result.best_fitness, PROBLEM.optimum)
         self.assertEqual(len(result.best_fitness_history), config.generations + 1)
 
+    def test_elitism_keeps_the_best_solution(self) -> None:
+        """Checks that the best fitness never decreases with elitism."""
+        config = GeneticAlgorithmConfig(population_size=10, generations=50, elitism=1)
+
+        history = GeneticAlgorithm(PROBLEM, config, seed=0).run().best_fitness_history
+
+        self.assertTrue(np.all(np.diff(history) >= 0))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -21,6 +21,7 @@ CROSSOVERS = {
 
 MUTATION_RATE_MULTIPLIERS = (0.1, 0.5, 1.0, 5.0, 10.0)
 CROSSOVER_RATES = (0.5, 0.7, 0.9, 1.0)
+ELITISM_SIZES = (0, 1)
 LARGE_PROBLEM_SIZE = 100
 
 
@@ -90,9 +91,10 @@ class ExperimentResult:
 def base_config(problem: KnapsackProblem) -> GeneticAlgorithmConfig:
     """Creates the reference configuration of the algorithm for a problem.
 
-    The reference uses roulette selection and one-point crossover. The mutation
-    rate is ``1 / n_items`` (on average one flipped gene per chromosome), capped
-    at 0.01. Large problems get more iterations, as they converge slower.
+    The reference uses roulette selection, one-point crossover and keeps the
+    single best chromosome (elitism). The mutation rate is ``1 / n_items`` (on
+    average one flipped gene per chromosome), capped at 0.01. Large problems get
+    more iterations, as they converge slower.
 
     Args:
         problem: Knapsack problem instance.
@@ -106,6 +108,7 @@ def base_config(problem: KnapsackProblem) -> GeneticAlgorithmConfig:
         generations=1000 if is_large else 100,
         crossover_rate=0.8,
         mutation_rate=min(0.01, 1 / problem.n_items),
+        elitism=1,
     )
 
 
@@ -117,7 +120,7 @@ def build_experiments(base: GeneticAlgorithmConfig) -> list[Experiment]:
 
     Returns:
         Experiments comparing mutation rates, crossover rates, selection
-        methods and crossover methods.
+        methods, crossover methods and elitism.
     """
     mutation_rates = [base.mutation_rate * multiplier for multiplier in MUTATION_RATE_MULTIPLIERS]
     return [
@@ -151,6 +154,14 @@ def build_experiments(base: GeneticAlgorithmConfig) -> list[Experiment]:
             series=[
                 Series(name, replace(base, crossover=crossover))
                 for name, crossover in CROSSOVERS.items()
+            ],
+        ),
+        Experiment(
+            name="elitism",
+            title="Elitism",
+            series=[
+                Series(f"elitism = {size}", replace(base, elitism=size))
+                for size in ELITISM_SIZES
             ],
         ),
     ]

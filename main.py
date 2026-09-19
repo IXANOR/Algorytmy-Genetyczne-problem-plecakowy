@@ -71,6 +71,7 @@ def parse_args() -> argparse.Namespace:
     solve.add_argument("--generations", type=int, default=200)
     solve.add_argument("--crossover-rate", type=float, default=0.8)
     solve.add_argument("--mutation-rate", type=float, default=0.01)
+    solve.add_argument("--elitism", type=int, default=0, help="best chromosomes kept unchanged")
     solve.add_argument("--selection", choices=SELECTIONS, default="roulette")
     solve.add_argument("--crossover", choices=CROSSOVERS, default="one-point")
     solve.add_argument("--seed", type=int, help="seed of the random number generator")
@@ -162,6 +163,7 @@ def solve(args: argparse.Namespace) -> None:
         generations=args.generations,
         crossover_rate=args.crossover_rate,
         mutation_rate=args.mutation_rate,
+        elitism=args.elitism,
         selection=SELECTIONS[args.selection],
         crossover=CROSSOVERS[args.crossover],
     )
